@@ -122,7 +122,7 @@ export default function Tienda({ productos }: { productos: ProductoCarta[] }) {
           </nav>
           <a className="cab__wa" href={linkWa(WA_DEFAULT)} target="_blank" rel="noopener noreferrer"><IconoWa /><span>{CONFIG.telefonoVisible}</span></a>
           <button type="button" key={pulso} className={`cab__comanda${pulso ? ' pulso' : ''}`} onClick={() => setAbierta(true)} aria-label={`Abrir la comanda: ${unidades} productos, ${fmt(total)}`}>
-            <IconoBolsa /><span className="cab__total">{unidades ? fmt(total) : 'Comanda'}</span>
+            <IconoBolsa /><span className="cab__total">{unidades ? fmt(total) : 'Carrito'}</span>
             {unidades > 0 && <b className="cab__n">{unidades}</b>}
           </button>
         </div>
