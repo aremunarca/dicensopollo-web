@@ -1,0 +1,609 @@
+{
+  "origen": "https://dicensopollo.com",
+  "extraido": "2026-11-24T12:30:19.723Z",
+  "moneda": "CLP",
+  "categorias": [
+    "Pollos y promos",
+    "Comida venezolana",
+    "Sándwiches y completos",
+    "Platos y colaciones",
+    "Acompañamientos"
+  ],
+  "productos": [
+    {
+      "slug": "di-censo-pollo",
+      "nombre": "Di Censo Pollo",
+      "categoria": "Pollos y promos",
+      "descripcion": "1 pollo asado, papas fritas grandes, 1 ensalada, 4 salsas (ajo, guasacaca, rocoto) y 1 Coca-Cola de 1,5 L.",
+      "opcion": "",
+      "destacado": true,
+      "img": "/productos/di-censo-pollo.webp",
+      "wooId": 251,
+      "url": "https://dicensopollo.com/producto/di-censo-pollo/",
+      "descripcionWeb": "El mas rico, El mas sabroso / 1 Pollo Asado / Papas Fritas (Grandes) / 1 Ensalada / 4 Salsas (Ajo, Guasacaca, Rocoto) / 1 Coca-Cola 1.5 LTS",
+      "variantes": [
+        {
+          "codigo": "DI-CENSO-POLLO",
+          "nombre": null,
+          "detalle": null,
+          "precio": 23500,
+          "wooId": 251
+        }
+      ]
+    },
+    {
+      "slug": "pollo-asado",
+      "nombre": "Pollo Asado",
+      "categoria": "Pollos y promos",
+      "descripcion": "Aderezado y macerado con ricas especias: piel dorada y carne increíblemente jugosa.",
+      "opcion": "Tamaño",
+      "destacado": true,
+      "img": "/productos/pollo-asado.webp",
+      "wooId": 302,
+      "url": "https://dicensopollo.com/producto/pollo/",
+      "descripcionWeb": "",
+      "variantes": [
+        {
+          "codigo": "POLLO-ASADO-CUARTO",
+          "nombre": "Cuarto",
+          "detalle": null,
+          "precio": 4000,
+          "wooId": 305
+        },
+        {
+          "codigo": "POLLO-ASADO-MEDIO",
+          "nombre": "Medio",
+          "detalle": null,
+          "precio": 8000,
+          "wooId": 304
+        },
+        {
+          "codigo": "POLLO-ASADO-ENTERO",
+          "nombre": "Entero",
+          "detalle": null,
+          "precio": 14000,
+          "wooId": 303
+        }
+      ]
+    },
+    {
+      "slug": "promos",
+      "nombre": "Promos",
+      "categoria": "Pollos y promos",
+      "descripcion": "",
+      "opcion": "Promo",
+      "destacado": true,
+      "img": "/productos/promos.webp",
+      "wooId": 256,
+      "url": "https://dicensopollo.com/producto/promo-1/",
+      "descripcionWeb": "1/4 de Pollo / Papas Fritas / 1 Salsa",
+      "variantes": [
+        {
+          "codigo": "PROMOS-PROMO-1",
+          "nombre": "Promo 1",
+          "detalle": "1/4 de pollo, papas fritas y 1 salsa",
+          "precio": 5500,
+          "wooId": 341
+        },
+        {
+          "codigo": "PROMOS-PROMO-2",
+          "nombre": "Promo 2",
+          "detalle": null,
+          "precio": 10500,
+          "wooId": 342
+        },
+        {
+          "codigo": "PROMOS-PROMO-3",
+          "nombre": "Promo 3",
+          "detalle": null,
+          "precio": 18000,
+          "wooId": 343
+        },
+        {
+          "codigo": "PROMOS-PROMO-4",
+          "nombre": "Promo 4",
+          "detalle": null,
+          "precio": 20000,
+          "wooId": 344
+        },
+        {
+          "codigo": "PROMOS-PROMO-5",
+          "nombre": "Promo 5",
+          "detalle": null,
+          "precio": 23500,
+          "wooId": 345
+        }
+      ]
+    },
+    {
+      "slug": "arepas",
+      "nombre": "Arepas",
+      "categoria": "Comida venezolana",
+      "descripcion": "",
+      "opcion": "Relleno",
+      "destacado": true,
+      "img": "/productos/arepas.webp",
+      "wooId": 272,
+      "url": "https://dicensopollo.com/producto/arepas/",
+      "descripcionWeb": "Puedes pedir de: / Queso, / jamón, / caraota, / pollo, / carne mechada, / molida, / mariscos.",
+      "variantes": [
+        {
+          "codigo": "AREPAS-QUESO",
+          "nombre": "Queso",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 347
+        },
+        {
+          "codigo": "AREPAS-JAMON",
+          "nombre": "Jamón",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 348
+        },
+        {
+          "codigo": "AREPAS-CARAOTA",
+          "nombre": "Caraota",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 349
+        },
+        {
+          "codigo": "AREPAS-POLLO",
+          "nombre": "Pollo",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 350
+        },
+        {
+          "codigo": "AREPAS-CARNE-MECHADA",
+          "nombre": "Carne mechada",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 351
+        },
+        {
+          "codigo": "AREPAS-MOLIDA",
+          "nombre": "Molida",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 352
+        },
+        {
+          "codigo": "AREPAS-MARISCOS",
+          "nombre": "Mariscos",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 353
+        }
+      ]
+    },
+    {
+      "slug": "cachapas",
+      "nombre": "Cachapas",
+      "categoria": "Comida venezolana",
+      "descripcion": "Con queso de mano.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/cachapas.webp",
+      "wooId": 275,
+      "url": "https://dicensopollo.com/producto/cachapas/",
+      "descripcionWeb": "Con queso de mano.",
+      "variantes": [
+        {
+          "codigo": "CACHAPAS",
+          "nombre": null,
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 275
+        }
+      ]
+    },
+    {
+      "slug": "empanadas",
+      "nombre": "Empanadas",
+      "categoria": "Comida venezolana",
+      "descripcion": "",
+      "opcion": "Relleno",
+      "destacado": false,
+      "img": "/productos/empanadas.webp",
+      "wooId": 289,
+      "url": "https://dicensopollo.com/producto/empandas/",
+      "descripcionWeb": "",
+      "variantes": [
+        {
+          "codigo": "EMPANADAS-QUESO",
+          "nombre": "Queso",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 290
+        },
+        {
+          "codigo": "EMPANADAS-JAMON",
+          "nombre": "Jamón",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 291
+        },
+        {
+          "codigo": "EMPANADAS-CARAOTA",
+          "nombre": "Caraota",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 292
+        },
+        {
+          "codigo": "EMPANADAS-POLLO",
+          "nombre": "Pollo",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 293
+        },
+        {
+          "codigo": "EMPANADAS-CARNE-MECHADA",
+          "nombre": "Carne mechada",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 294
+        },
+        {
+          "codigo": "EMPANADAS-MOLIDA",
+          "nombre": "Molida",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 295
+        },
+        {
+          "codigo": "EMPANADAS-MARISCOS",
+          "nombre": "Mariscos",
+          "detalle": null,
+          "precio": 1500,
+          "wooId": 296
+        }
+      ]
+    },
+    {
+      "slug": "pabellon-venezolano",
+      "nombre": "Pabellón Venezolano",
+      "categoria": "Comida venezolana",
+      "descripcion": "Arroz, caraota, carne mechada, tajadas y huevo.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/pabellon-venezolano.webp",
+      "wooId": 270,
+      "url": "https://dicensopollo.com/producto/pabellon-venezolano/",
+      "descripcionWeb": "Arroz, / Caraota, / Carne Mechada / Tajadas y Huevo",
+      "variantes": [
+        {
+          "codigo": "PABELLON-VENEZOLANO",
+          "nombre": null,
+          "detalle": null,
+          "precio": 7000,
+          "wooId": 270
+        }
+      ]
+    },
+    {
+      "slug": "hamburguesa",
+      "nombre": "Hamburguesa",
+      "categoria": "Sándwiches y completos",
+      "descripcion": "Pan, lechuga, tomate, papas al hilo, jamón, queso, carne y salsas.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/hamburguesa.webp",
+      "wooId": 277,
+      "url": "https://dicensopollo.com/producto/hamburguesa/",
+      "descripcionWeb": "Pan, / Lechuga, / tomata, / papas al hilo, / jamón, / queso, / carne y / salsas",
+      "variantes": [
+        {
+          "codigo": "HAMBURGUESA",
+          "nombre": null,
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 277
+        }
+      ]
+    },
+    {
+      "slug": "sandwiches",
+      "nombre": "Sándwiches",
+      "categoria": "Sándwiches y completos",
+      "descripcion": "",
+      "opcion": "Tipo",
+      "destacado": false,
+      "img": "/productos/sandwiches.webp",
+      "wooId": 321,
+      "url": "https://dicensopollo.com/producto/sanwiches/",
+      "descripcionWeb": "",
+      "variantes": [
+        {
+          "codigo": "SANDWICHES-TRADICIONAL",
+          "nombre": "Tradicional",
+          "detalle": null,
+          "precio": 4000,
+          "wooId": 323
+        },
+        {
+          "codigo": "SANDWICHES-ITALIANO",
+          "nombre": "Italiano",
+          "detalle": null,
+          "precio": 4500,
+          "wooId": 324
+        },
+        {
+          "codigo": "SANDWICHES-ESPECIAL",
+          "nombre": "Especial",
+          "detalle": null,
+          "precio": 4500,
+          "wooId": 325
+        },
+        {
+          "codigo": "SANDWICHES-BARROS-LUCO",
+          "nombre": "Barros Luco",
+          "detalle": null,
+          "precio": 4500,
+          "wooId": 326
+        },
+        {
+          "codigo": "SANDWICHES-CHACARERO",
+          "nombre": "Chacarero",
+          "detalle": null,
+          "precio": 4500,
+          "wooId": 327
+        }
+      ]
+    },
+    {
+      "slug": "completos",
+      "nombre": "Completos",
+      "categoria": "Sándwiches y completos",
+      "descripcion": "",
+      "opcion": "Tipo",
+      "destacado": false,
+      "img": "/productos/completos.webp",
+      "wooId": 328,
+      "url": "https://dicensopollo.com/producto/completos/",
+      "descripcionWeb": "",
+      "variantes": [
+        {
+          "codigo": "COMPLETOS-ITALIANO",
+          "nombre": "Italiano",
+          "detalle": null,
+          "precio": 3000,
+          "wooId": 337
+        },
+        {
+          "codigo": "COMPLETOS-COMPLETO",
+          "nombre": "Completo",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 335
+        },
+        {
+          "codigo": "COMPLETOS-DINAMICO",
+          "nombre": "Dinámico",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 336
+        },
+        {
+          "codigo": "COMPLETOS-ITALIANO-2",
+          "nombre": "Italiano × 2",
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 338
+        }
+      ]
+    },
+    {
+      "slug": "colaciones",
+      "nombre": "Colaciones",
+      "categoria": "Platos y colaciones",
+      "descripcion": "Bistec, chuleta de cerdo o chuleta ahumada. Acompañamiento: arroz, ensalada o papas fritas.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/colaciones.webp",
+      "wooId": 268,
+      "url": "https://dicensopollo.com/producto/colaciones/",
+      "descripcionWeb": "Bistec, Chuleta de Cerdo, Chuleta Ahumada / Acompañamiento: Arroz, / Ensalada o Papas Fritas",
+      "variantes": [
+        {
+          "codigo": "COLACIONES",
+          "nombre": null,
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 268
+        }
+      ]
+    },
+    {
+      "slug": "lasana-pasticho",
+      "nombre": "Lasaña – Pasticho",
+      "categoria": "Platos y colaciones",
+      "descripcion": "Con carne, crema bechamel, jamón y queso.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/lasana-pasticho.webp",
+      "wooId": 266,
+      "url": "https://dicensopollo.com/producto/pasticho/",
+      "descripcionWeb": "Con Carne, Crema Bechamel, / Jamón y Queso",
+      "variantes": [
+        {
+          "codigo": "LASANA-PASTICHO",
+          "nombre": null,
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 266
+        }
+      ]
+    },
+    {
+      "slug": "arroz-chino",
+      "nombre": "Arroz Chino",
+      "categoria": "Platos y colaciones",
+      "descripcion": "Arroz frito con brotes de soja, cebollín, trozos de pollo, jamón y chuleta ahumada.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/arroz-chino.webp",
+      "wooId": 262,
+      "url": "https://dicensopollo.com/producto/arroz-chino/",
+      "descripcionWeb": "Con Trozos de pollo / Jamón y chuleta ahumada",
+      "variantes": [
+        {
+          "codigo": "ARROZ-CHINO",
+          "nombre": null,
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 262
+        }
+      ]
+    },
+    {
+      "slug": "papas-fritas",
+      "nombre": "Papas Fritas",
+      "categoria": "Acompañamientos",
+      "descripcion": "Cortadas a medida, gruesas y en porciones generosas: doradas y crujientes por fuera, suaves por dentro.",
+      "opcion": "Tamaño",
+      "destacado": false,
+      "img": "/productos/papas-fritas.webp",
+      "wooId": 306,
+      "url": "https://dicensopollo.com/producto/papas/",
+      "descripcionWeb": "",
+      "variantes": [
+        {
+          "codigo": "PAPAS-FRITAS-PEQUENAS",
+          "nombre": "Pequeñas",
+          "detalle": null,
+          "precio": 2000,
+          "wooId": 313
+        },
+        {
+          "codigo": "PAPAS-FRITAS-MEDIANAS",
+          "nombre": "Medianas",
+          "detalle": null,
+          "precio": 3000,
+          "wooId": 312
+        },
+        {
+          "codigo": "PAPAS-FRITAS-GRANDES",
+          "nombre": "Grandes",
+          "detalle": null,
+          "precio": 4000,
+          "wooId": 311
+        },
+        {
+          "codigo": "PAPAS-FRITAS-EXTRAS-GRANDES",
+          "nombre": "Extras Grandes",
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 310
+        }
+      ]
+    },
+    {
+      "slug": "salchipapas",
+      "nombre": "Salchipapas",
+      "categoria": "Acompañamientos",
+      "descripcion": "",
+      "opcion": "Tamaño",
+      "destacado": false,
+      "img": "/productos/salchipapas.webp",
+      "wooId": 315,
+      "url": "https://dicensopollo.com/producto/salchipapas/",
+      "descripcionWeb": "",
+      "variantes": [
+        {
+          "codigo": "SALCHIPAPAS-PEQUENAS",
+          "nombre": "Pequeñas",
+          "detalle": null,
+          "precio": 2500,
+          "wooId": 319
+        },
+        {
+          "codigo": "SALCHIPAPAS-MEDIANAS",
+          "nombre": "Medianas",
+          "detalle": null,
+          "precio": 3500,
+          "wooId": 318
+        },
+        {
+          "codigo": "SALCHIPAPAS-GRANDES",
+          "nombre": "Grandes",
+          "detalle": null,
+          "precio": 5000,
+          "wooId": 317
+        }
+      ]
+    },
+    {
+      "slug": "nuggets",
+      "nombre": "Nuggets",
+      "categoria": "Acompañamientos",
+      "descripcion": "6 piezas de nuggets + 1/4 de papas fritas.",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/nuggets.webp",
+      "wooId": 287,
+      "url": "https://dicensopollo.com/producto/nuggets/",
+      "descripcionWeb": "1/4 de papas + 6 piezas de Nuggets",
+      "variantes": [
+        {
+          "codigo": "NUGGETS",
+          "nombre": null,
+          "detalle": null,
+          "precio": 3000,
+          "wooId": 287
+        }
+      ]
+    },
+    {
+      "slug": "ensaladas",
+      "nombre": "Ensaladas",
+      "categoria": "Acompañamientos",
+      "descripcion": "Lechuga, tomate, repollo, zanahoria, pepino, betarraga y más…",
+      "opcion": "",
+      "destacado": false,
+      "img": "/productos/ensaladas.webp",
+      "wooId": 461,
+      "url": "https://dicensopollo.com/producto/ensaladas/",
+      "descripcionWeb": "Lechuga, tomate, repollo, zanahoria, pepino, beterraga y mas…",
+      "variantes": [
+        {
+          "codigo": "ENSALADAS",
+          "nombre": null,
+          "detalle": null,
+          "precio": 2000,
+          "wooId": 461
+        }
+      ]
+    },
+    {
+      "slug": "sopaipillas",
+      "nombre": "Sopaipillas",
+      "categoria": "Acompañamientos",
+      "descripcion": "",
+      "opcion": "Cantidad",
+      "destacado": false,
+      "img": "/productos/sopaipillas.webp",
+      "wooId": 298,
+      "url": "https://dicensopollo.com/producto/sopaipilla/",
+      "descripcionWeb": "1 x $400 / 3 x $1000",
+      "variantes": [
+        {
+          "codigo": "SOPAIPILLAS-1-UNIDAD",
+          "nombre": "1 unidad",
+          "detalle": null,
+          "precio": 400,
+          "wooId": 299
+        },
+        {
+          "codigo": "SOPAIPILLAS-3-UNIDADES",
+          "nombre": "3 unidades",
+          "detalle": null,
+          "precio": 1000,
+          "wooId": 300
+        }
+      ]
+    }
+  ]
+}

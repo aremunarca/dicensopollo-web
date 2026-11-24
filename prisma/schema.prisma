@@ -1,0 +1,178 @@
+// Di Censo Pollo — esquema de base de datos (MySQL / MariaDB de XAMPP).
+// Carta (categorías, productos y sus opciones), fotos subidas desde el panel, usuarios y pedidos por WhatsApp.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+/// Secciones de la carta (Pollos y promos, Comida venezolana…).
+model Categoria {
+  id        Int        @id @default(autoincrement())
+  nombre    String     @unique @db.VarChar(80)
+  orden     Int        @default(0)
+  productos Producto[]
+
+  @@map("categorias")
+}
+
+/// Un producto = una tarjeta de la carta (ej. "Pollo Asado"). Sus opciones con precio son filas de `variantes`.
+model Producto {
+  id          Int        @id @default(autoincrement())
+  /// Identificador para enlaces y para emparejar fotos en lote (ej. "pollo-asado").
+  slug        String     @unique @db.VarChar(160)
+  nombre      String     @db.VarChar(150)
+  descripcion String     @default("") @db.VarChar(600)
+  categoriaId Int        @map("categoria_id")
+  /// Foto: /productos/archivo.jpg (catálogo inicial) o /api/imagenes/12 (subida desde el panel). Vacía = sin foto.
+  img         String     @default("") @db.VarChar(255)
+  /// Título del selector de opciones ("Tamaño", "Relleno"). Vacío si el producto tiene una sola opción.
+  opcion      String     @default("") @db.VarChar(40)
+  /// Aparece en "Los favoritos" de la portada.
+  destacado   Boolean    @default(false)
+  /// Agotado por hoy: se ve en la carta pero no se puede pedir.
+  agotado     Boolean    @default(false)
+  /// Los productos inactivos no aparecen en la carta.
+  activo      Boolean    @default(true)
+  orden       Int        @default(0)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  categoria   Categoria  @relation(fields: [categoriaId], references: [id], onUpdate: Cascade)
+  variantes   Variante[]
+
+  @@index([categoriaId])
+  @@index([activo, orden])
+  @@map("productos")
+}
+
+/// Cada opción con precio de un producto (Entero / Medio / Cuarto, Queso / Pollo…).
+/// Un producto sin opciones tiene una sola variante con `nombre` vacío.
+model Variante {
+  id          Int          @id @default(autoincrement())
+  productoId  Int          @map("producto_id")
+  /// Código interno único (ej. POLLO-ASADO-ENTERO). Se usa en la carga masiva.
+  codigo      String       @unique @db.VarChar(40)
+  /// Nombre de la opción ("Entero"). Null = opción única.
+  nombre      String?      @db.VarChar(80)
+  /// Qué incluye esta opción (ej. Promo 1: "1/4 de pollo, papas fritas y 1 salsa").
+  detalle     String?      @db.VarChar(255)
+  /// Precio en pesos chilenos (sin decimales).
+  precio      Int
+  activo      Boolean      @default(true)
+  orden       Int          @default(0)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  producto    Producto     @relation(fields: [productoId], references: [id], onUpdate: Cascade)
+  pedidoItems PedidoItem[]
+
+  @@index([productoId, activo])
+  @@map("variantes")
+}
+
+/// Fotos subidas desde el panel /admin (se sirven en /api/imagenes/:id).
+/// Las fotos del catálogo inicial están en public/productos/.
+model Imagen {
+  id        Int      @id @default(autoincrement())
+  mime      String   @db.VarChar(40)
+  datos     Bytes    @db.MediumBlob
+  ancho     Int?
+  alto      Int?
+  bytes     Int
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("imagenes")
+}
+
+/// Roles del panel: GERENTE ve todo; LOGISTICA (despacho) atiende pedidos, carta y carga masiva.
+enum Rol {
+  GERENTE
+  LOGISTICA
+}
+
+/// Usuarios del panel /admin. La contraseña se guarda cifrada (scrypt).
+model Usuario {
+  id           Int            @id @default(autoincrement())
+  nombre       String         @db.VarChar(80)
+  usuario      String         @unique @db.VarChar(40)
+  passwordHash String         @map("password_hash") @db.VarChar(200)
+  rol          Rol            @default(LOGISTICA)
+  activo       Boolean        @default(true)
+  ultimoAcceso DateTime?      @map("ultimo_acceso")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at")
+  eventos      PedidoEvento[]
+
+  @@map("usuarios")
+}
+
+/// Estados del pedido. CONFIRMADO y ENTREGADO cuentan como venta en las estadísticas.
+enum EstadoPedido {
+  PENDIENTE
+  CONFIRMADO
+  ENTREGADO
+  CANCELADO
+}
+
+/// Pedidos armados en la carta (se registran al abrir WhatsApp).
+model Pedido {
+  id        Int            @id @default(autoincrement())
+  estado    EstadoPedido   @default(PENDIENTE)
+  nombre    String         @db.VarChar(120)
+  telefono  String         @db.VarChar(40)
+  /// "Delivery" | "Retiro en el local"
+  entrega   String         @db.VarChar(40)
+  comuna    String?        @db.VarChar(80)
+  direccion String?        @db.VarChar(255)
+  pago      String         @db.VarChar(60)
+  notas     String?        @db.Text
+  unidades  Int
+  /// Total en pesos chilenos (sin el costo del delivery, que se confirma por WhatsApp).
+  total     Int
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @default(now()) @updatedAt @map("updated_at")
+  items     PedidoItem[]
+  eventos   PedidoEvento[]
+
+  @@index([createdAt])
+  @@index([estado, createdAt])
+  @@map("pedidos")
+}
+
+/// Historial del pedido: cambios de estado y comentarios del equipo.
+model PedidoEvento {
+  id         Int           @id @default(autoincrement())
+  pedidoId   Int           @map("pedido_id")
+  /// Estado al que pasó el pedido (null = solo comentario)
+  estado     EstadoPedido?
+  comentario String        @default("") @db.VarChar(500)
+  usuarioId  Int?          @map("usuario_id")
+  /// Nombre de quien lo registró (se conserva aunque se borre el usuario)
+  autor      String        @default("") @db.VarChar(80)
+  createdAt  DateTime      @default(now()) @map("created_at")
+  pedido     Pedido        @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  usuario    Usuario?      @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+
+  @@index([pedidoId])
+  @@map("pedido_eventos")
+}
+
+/// Líneas del pedido. Guarda código, nombre y precio del momento por si el producto cambia después.
+model PedidoItem {
+  id         Int       @id @default(autoincrement())
+  pedidoId   Int       @map("pedido_id")
+  varianteId Int?      @map("variante_id")
+  codigo     String    @db.VarChar(40)
+  nombre     String    @db.VarChar(255)
+  cantidad   Int
+  precio     Int
+  pedido     Pedido    @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  variante   Variante? @relation(fields: [varianteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([pedidoId])
+  @@index([varianteId])
+  @@map("pedido_items")
+}
