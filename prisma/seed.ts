@@ -1,16 +1,15 @@
-// Datos iniciales: la carta de dicensopollo.com (18 productos, 49 opciones con precio en CLP),
-// extraída con `npm run catalogo:extraer` a prisma/seed-data/carta.json.
+// Datos iniciales de la carta en prisma/seed-data/carta.json.
 //
 // Es idempotente:
 // - Lo que falta se crea (categorías, productos, opciones).
-// - En las opciones que ya existen (mismo código) solo se actualiza el precio si cambió en el sitio.
-//   NO se tocan nombres, fotos, descripciones, visibilidad ni "agotado", para respetar lo editado en el panel.
+// - En las opciones que ya existen (mismo código) se actualiza el precio; el nombre solo cambia
+//   si la opción lo solicita explícitamente. Fotos, descripciones, visibilidad y "agotado" se respetan.
 import 'dotenv/config';
 import fs from 'node:fs';
 import path from 'node:path';
 import { prisma } from '../src/lib/prisma';
 
-type SeedVariante = { codigo: string; nombre: string | null; detalle: string | null; precio: number };
+type SeedVariante = { codigo: string; nombre: string | null; detalle: string | null; precio: number; actualizarNombre?: boolean };
 type SeedProducto = {
   slug: string; nombre: string; categoria: string; descripcion: string; opcion: string; destacado: boolean; img: string;
   variantes: SeedVariante[];
@@ -27,7 +26,7 @@ async function main() {
     catIds.set(nombre, c.id);
   }
 
-  let productosNuevos = 0, opcionesNuevas = 0, preciosActualizados = 0;
+  let productosNuevos = 0, opcionesNuevas = 0, preciosActualizados = 0, nombresActualizados = 0;
   for (const [i, p] of carta.productos.entries()) {
     const existentes = await prisma.variante.findMany({ where: { codigo: { in: p.variantes.map((v) => v.codigo) } } });
     let producto = existentes[0]
@@ -47,16 +46,23 @@ async function main() {
       if (!e) {
         await prisma.variante.create({ data: { productoId: producto.id, codigo: v.codigo, nombre: v.nombre, detalle: v.detalle, precio: v.precio, orden: j } });
         opcionesNuevas++;
-      } else if (e.precio !== v.precio) {
-        await prisma.variante.update({ where: { id: e.id }, data: { precio: v.precio } });
-        preciosActualizados++;
+      } else {
+        const actualizaNombre = v.actualizarNombre && e.nombre !== v.nombre;
+        if (e.precio !== v.precio || actualizaNombre) {
+          await prisma.variante.update({
+            where: { id: e.id },
+            data: { precio: v.precio, ...(actualizaNombre ? { nombre: v.nombre } : {}) },
+          });
+          if (e.precio !== v.precio) preciosActualizados++;
+          if (actualizaNombre) nombresActualizados++;
+        }
       }
     }
   }
 
   console.log(`Carta de ${carta.origen} (extraída el ${carta.extraido.slice(0, 10)})`);
   console.log(`Categorías: ${carta.categorias.length} · Productos nuevos: ${productosNuevos} (total ${await prisma.producto.count()})`);
-  console.log(`Opciones nuevas: ${opcionesNuevas} · precios actualizados: ${preciosActualizados} · total en BD: ${await prisma.variante.count()}`);
+  console.log(`Opciones nuevas: ${opcionesNuevas} · precios actualizados: ${preciosActualizados} · nombres actualizados: ${nombresActualizados} · total en BD: ${await prisma.variante.count()}`);
 }
 
 main()

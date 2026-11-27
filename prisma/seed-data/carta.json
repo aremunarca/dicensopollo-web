@@ -1,6 +1,6 @@
 {
   "origen": "https://dicensopollo.com",
-  "extraido": "2026-11-24T12:30:19.723Z",
+  "extraido": "2026-11-27T01:49:00.000Z",
   "moneda": "CLP",
   "categorias": [
     "Pollos y promos",
@@ -131,49 +131,49 @@
           "codigo": "AREPAS-QUESO",
           "nombre": "Queso",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 347
         },
         {
           "codigo": "AREPAS-JAMON",
           "nombre": "Jamón",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 348
         },
         {
           "codigo": "AREPAS-CARAOTA",
           "nombre": "Caraota",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 349
         },
         {
           "codigo": "AREPAS-POLLO",
           "nombre": "Pollo",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 350
         },
         {
           "codigo": "AREPAS-CARNE-MECHADA",
           "nombre": "Carne mechada",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 351
         },
         {
           "codigo": "AREPAS-MOLIDA",
           "nombre": "Molida",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 352
         },
         {
           "codigo": "AREPAS-MARISCOS",
           "nombre": "Mariscos",
           "detalle": null,
-          "precio": 3500,
+          "precio": 5000,
           "wooId": 353
         }
       ]
@@ -278,7 +278,7 @@
           "codigo": "PABELLON-VENEZOLANO",
           "nombre": null,
           "detalle": null,
-          "precio": 7000,
+          "precio": 6000,
           "wooId": 270
         }
       ]
@@ -334,7 +334,7 @@
           "codigo": "SANDWICHES-ESPECIAL",
           "nombre": "Especial",
           "detalle": null,
-          "precio": 4500,
+          "precio": 5000,
           "wooId": 325
         },
         {
@@ -488,14 +488,14 @@
           "codigo": "PAPAS-FRITAS-GRANDES",
           "nombre": "Grandes",
           "detalle": null,
-          "precio": 4000,
+          "precio": 5000,
           "wooId": 311
         },
         {
           "codigo": "PAPAS-FRITAS-EXTRAS-GRANDES",
           "nombre": "Extras Grandes",
           "detalle": null,
-          "precio": 5000,
+          "precio": 7000,
           "wooId": 310
         }
       ]
@@ -539,19 +539,19 @@
       "slug": "nuggets",
       "nombre": "Nuggets",
       "categoria": "Acompañamientos",
-      "descripcion": "6 piezas de nuggets + 1/4 de papas fritas.",
+      "descripcion": "1/4 de papas fritas + 8 piezas de nuggets.",
       "opcion": "",
       "destacado": false,
       "img": "/productos/nuggets.webp",
       "wooId": 287,
       "url": "https://dicensopollo.com/producto/nuggets/",
-      "descripcionWeb": "1/4 de papas + 6 piezas de Nuggets",
+      "descripcionWeb": "1/4 de papas + 8 piezas de Nuggets",
       "variantes": [
         {
           "codigo": "NUGGETS",
           "nombre": null,
           "detalle": null,
-          "precio": 3000,
+          "precio": 5000,
           "wooId": 287
         }
       ]
@@ -587,7 +587,7 @@
       "img": "/productos/sopaipillas.webp",
       "wooId": 298,
       "url": "https://dicensopollo.com/producto/sopaipilla/",
-      "descripcionWeb": "1 x $400 / 3 x $1000",
+      "descripcionWeb": "1 x $400 / 15 x $5000",
       "variantes": [
         {
           "codigo": "SOPAIPILLAS-1-UNIDAD",
@@ -598,11 +598,39 @@
         },
         {
           "codigo": "SOPAIPILLAS-3-UNIDADES",
-          "nombre": "3 unidades",
+          "nombre": "15 unidades",
+          "actualizarNombre": true,
           "detalle": null,
-          "precio": 1000,
+          "precio": 5000,
           "wooId": 300
         }
+      ]
+    },
+    {
+      "slug": "salsas",
+      "nombre": "Salsas",
+      "categoria": "Acompañamientos",
+      "descripcion": "",
+      "opcion": "Salsa",
+      "destacado": false,
+      "img": "",
+      "variantes": [
+        { "codigo": "SALSAS-AJI", "nombre": "Ají", "detalle": null, "precio": 300 },
+        { "codigo": "SALSAS-GUASACACA", "nombre": "Guasacaca", "detalle": null, "precio": 300 },
+        { "codigo": "SALSAS-PICANTE", "nombre": "Picante", "detalle": null, "precio": 300 },
+        { "codigo": "SALSAS-HABANERA", "nombre": "Habanera", "detalle": null, "precio": 300 }
+      ]
+    },
+    {
+      "slug": "tequenos",
+      "nombre": "Tequeños",
+      "categoria": "Comida venezolana",
+      "descripcion": "Dedos de queso llanero.",
+      "opcion": "",
+      "destacado": false,
+      "img": "",
+      "variantes": [
+        { "codigo": "TEQUENOS-5-UNIDADES", "nombre": "5 unidades", "detalle": null, "precio": 3000 }
       ]
     }
   ]

@@ -34,10 +34,17 @@ export default function Tarjeta({ p, onAgregar, grande = false }: {
         {p.img ? <img src={p.img} alt={p.nombre} loading="lazy" width={800} height={800} /> : <span className="plato__sinfoto" aria-hidden="true" />}
         {p.agotado && <span className="plato__sello">Agotado hoy</span>}
         {varias && <span className="plato__desde">desde <b>{fmt(desde)}</b></span>}
+        {!grande && (
+          <button type="button" className={`btn-agregar${hecho ? ' is-hecho' : ''}`} onClick={agregar} disabled={p.agotado}
+            aria-label={p.agotado ? `${p.nombre}: agotado` : `Agregar ${qty} ${p.nombre}${varias ? ` (${op.nombre})` : ''} a la comanda`}>
+            {p.agotado ? '×' : hecho ? '✓' : '+'}
+          </button>
+        )}
       </div>
       <div className="plato__cuerpo">
         <h3 className="plato__nombre">{p.nombre}</h3>
         {p.descripcion && <p className="plato__desc">{p.descripcion}</p>}
+        {!grande && <p className="plato__precio">{fmt(op.precio)}</p>}
 
         {varias && (
           <fieldset className="chips" aria-label={`${p.opcion || 'Opción'} de ${p.nombre}`}>
@@ -59,10 +66,12 @@ export default function Tarjeta({ p, onAgregar, grande = false }: {
             <output aria-live="polite">{qty}</output>
             <button type="button" onClick={() => setQty((q) => Math.min(99, q + 1))} disabled={p.agotado} aria-label="Más">+</button>
           </div>
-          <button type="button" className={`btn-agregar${hecho ? ' is-hecho' : ''}`} onClick={agregar} disabled={p.agotado}
-            aria-label={p.agotado ? `${p.nombre}: agotado` : `Agregar ${qty} ${p.nombre}${varias ? ` (${op.nombre})` : ''} a la comanda`}>
-            {p.agotado ? 'Agotado' : hecho ? '¡A la comanda!' : <>Agregar <b>{fmt(op.precio * qty)}</b></>}
-          </button>
+          {grande && (
+            <button type="button" className={`btn-agregar${hecho ? ' is-hecho' : ''}`} onClick={agregar} disabled={p.agotado}
+              aria-label={p.agotado ? `${p.nombre}: agotado` : `Agregar ${qty} ${p.nombre}${varias ? ` (${op.nombre})` : ''} a la comanda`}>
+              {p.agotado ? 'Agotado' : hecho ? '¡A la comanda!' : <>Agregar <b>{fmt(op.precio * qty)}</b></>}
+            </button>
+          )}
         </div>
       </div>
     </article>
