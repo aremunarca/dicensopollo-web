@@ -109,6 +109,23 @@ model Usuario {
   @@map("usuarios")
 }
 
+/// Sucursales donde se reciben pedidos y su contacto de WhatsApp.
+model Sucursal {
+  id        Int      @id @default(autoincrement())
+  nombre    String   @db.VarChar(80)
+  telefono  String   @db.VarChar(20)
+  direccion String   @db.VarChar(255)
+  comuna    String   @default("Quinta Normal") @db.VarChar(80)
+  activo    Boolean  @default(true)
+  orden     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  pedidos   Pedido[]
+
+  @@index([activo, orden])
+  @@map("sucursales")
+}
+
 /// Estados del pedido. CONFIRMADO y ENTREGADO cuentan como venta en las estadísticas.
 enum EstadoPedido {
   PENDIENTE
@@ -119,24 +136,27 @@ enum EstadoPedido {
 
 /// Pedidos armados en la carta (se registran al abrir WhatsApp).
 model Pedido {
-  id        Int            @id @default(autoincrement())
-  estado    EstadoPedido   @default(PENDIENTE)
-  nombre    String         @db.VarChar(120)
-  telefono  String         @db.VarChar(40)
+  id         Int            @id @default(autoincrement())
+  estado     EstadoPedido   @default(PENDIENTE)
+  nombre     String         @db.VarChar(120)
+  telefono   String         @db.VarChar(40)
   /// "Delivery" | "Retiro en el local"
-  entrega   String         @db.VarChar(40)
-  comuna    String?        @db.VarChar(80)
-  direccion String?        @db.VarChar(255)
-  pago      String         @db.VarChar(60)
-  notas     String?        @db.Text
-  unidades  Int
+  entrega    String         @db.VarChar(40)
+  sucursalId Int?           @map("sucursal_id")
+  comuna     String?        @db.VarChar(80)
+  direccion  String?        @db.VarChar(255)
+  pago       String         @db.VarChar(60)
+  notas      String?        @db.Text
+  unidades   Int
   /// Total en pesos chilenos (sin el costo del delivery, que se confirma por WhatsApp).
-  total     Int
-  createdAt DateTime       @default(now()) @map("created_at")
-  updatedAt DateTime       @default(now()) @updatedAt @map("updated_at")
-  items     PedidoItem[]
-  eventos   PedidoEvento[]
+  total      Int
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @default(now()) @updatedAt @map("updated_at")
+  items      PedidoItem[]
+  eventos    PedidoEvento[]
+  sucursal   Sucursal?      @relation(fields: [sucursalId], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
+  @@index([sucursalId])
   @@index([createdAt])
   @@index([estado, createdAt])
   @@map("pedidos")

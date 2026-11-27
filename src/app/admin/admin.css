@@ -370,6 +370,22 @@ textarea.adm-input { resize: vertical; }
 /* Usuarios */
 .adm-usuarios { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 14px; align-items: start; }
 .adm-usuarios .adm-card + .adm-card { margin-top: 0; }
+.adm-sucursales { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 14px; align-items: start; }
+.adm-sucursales .adm-card + .adm-card { margin-top: 0; }
+.adm-lista-sucursales { list-style: none; margin: 0; padding: 0; display: grid; }
+.adm-lista-sucursales li { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.adm-lista-sucursales li:first-child { border-top: 0; }
+.adm-lista-sucursales li.is-inactivo { opacity: .58; }
+.adm-sucursal-info { flex: 1 1 210px; min-width: 0; }
+.adm-sucursal-info b, .adm-sucursal-info small { display: block; }
+.adm-sucursal-info b { font-size: 14px; }
+.adm-sucursal-info small { margin-top: 3px; font-size: 12px; color: var(--muted); }
+.adm-sucursal-info em { color: var(--muted); font-style: normal; font-weight: 500; }
+.adm-sucursal-edicion { flex: 1 1 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.adm-sucursal-edicion .adm-input { width: 100%; padding: 8px 10px; }
+.adm-sucursal-acciones { display: flex; flex-wrap: wrap; gap: 7px; }
+.adm-sucursal-acciones .btn, .adm-sucursal-acciones .adm-btn { padding: 8px 12px; font-size: 12px; }
+.adm-sucursal-edicion .adm-sucursal-acciones { grid-column: 1 / -1; }
 .adm-lista-usuarios { list-style: none; margin: 0; padding: 0; display: grid; }
 .adm-lista-usuarios li { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 0; border-top: 1px solid var(--line); }
 .adm-lista-usuarios li:first-child { border-top: 0; }
@@ -442,7 +458,7 @@ textarea.adm-input { resize: vertical; }
 }
 @media (max-width: 1100px) {
   .adm-dash, .adm-kpis { grid-template-columns: 1fr 1fr; }
-  .adm-usuarios, .adm-pasos { grid-template-columns: 1fr; }
+  .adm-usuarios, .adm-sucursales, .adm-pasos { grid-template-columns: 1fr; }
   .ef__cuerpo { grid-template-columns: 1fr; }
   .ef__vista { justify-self: center; }
 }
@@ -481,6 +497,8 @@ textarea.adm-input { resize: vertical; }
   .adm-fecha .adm-input { flex: 1; }
   .adm-acciones__btns .btn, .adm-acciones__btns .adm-btn { flex: 1 1 auto; }
   .adm-campos { grid-template-columns: 1fr; }
+  .adm-sucursal-edicion { grid-template-columns: 1fr; }
+  .adm-sucursal-edicion .adm-sucursal-acciones { grid-column: auto; }
   .adm-nuevo { margin-left: 0; width: 100%; }
   .adm-editor__pie .btn { flex: 1; }
   .adm-rapida__tip { display: none; }

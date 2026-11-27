@@ -3,7 +3,7 @@ import { registrarPedido } from '@/lib/pedidos';
 
 /**
  * POST /api/pedidos — registra el pedido con los precios de la BD y devuelve el enlace de WhatsApp.
- * { items: [{ id, qty }], nombre, telefono, entrega, comuna?, direccion?, pago, notas? }
+ * { items: [{ id, qty }], sucursalId, nombre, telefono, entrega, comuna?, direccion?, pago, notas? }
  */
 export async function POST(req: Request) {
   const body = await readJson(req);

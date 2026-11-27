@@ -106,6 +106,7 @@ export const ICONOS = {
   productos: svg(<><path d="M3 11h18a9 9 0 0 1-18 0Z" /><path d="M12 3v3M8 4.5l1 2M16 4.5l-1 2" /></>),
   carga: svg(<><path d="M12 15V3M7 8l5-5 5 5" /><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" /></>),
   usuarios: svg(<><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a5 5 0 0 1 3.5 5.5" /></>),
+  sucursales: svg(<><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" /><circle cx="12" cy="9" r="2.2" /></>),
   tienda: svg(<><path d="M3 9l1.5-5h15L21 9" /><path d="M4 9v11h16V9M9 20v-6h6v6M3 9h18" /></>),
   salir: svg(<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11" />),
   menu: svg(<path d="M4 6h16M4 12h16M4 18h16" />),

@@ -107,7 +107,7 @@ export default function VistaPedidos(props: {
                   <td className="adm-num-pedido">{p.numero}<small>{p.unidades} producto{p.unidades === 1 ? '' : 's'}</small></td>
                   <td>{fechaHora(p.createdAt)}</td>
                   <td><b>{p.nombre}</b><small>{p.telefono}</small></td>
-                  <td><b>{p.entrega}</b>{p.comuna && <small>{p.comuna}</small>}</td>
+                  <td><b>{p.entrega}</b><small>{p.sucursal}</small>{p.comuna && <small>{p.comuna}</small>}</td>
                   <td className="num"><b>{fmt(p.total)}</b><small>{p.pago}</small></td>
                   <td><ChipEstado estado={p.estado} /></td>
                   <td><button className="adm-btn" type="button" onClick={(e) => { e.stopPropagation(); setAbierto(p.id); }}>Ver</button></td>

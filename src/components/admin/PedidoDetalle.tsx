@@ -83,6 +83,7 @@ export default function PedidoDetalle(props: {
         <div>
           <p className="adm-eyebrow">{pedido.entrega} · {fechaHora(pedido.createdAt)}</p>
           <Titulo id="t-pedido">{pedido.numero}</Titulo>
+          <p className="adm-meta">Sucursal: <b>{pedido.sucursal}</b>{pedido.direccionSucursal && ` · ${pedido.direccionSucursal}, ${pedido.comunaSucursal}`}</p>
         </div>
         <ChipEstado estado={pedido.estado} />
       </div>

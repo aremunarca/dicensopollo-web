@@ -5,15 +5,20 @@ export const ROLES: readonly Rol[] = ['GERENTE', 'LOGISTICA'];
 export const ROL_TEXTO: Record<Rol, string> = { GERENTE: 'Gerente', LOGISTICA: 'Despacho' };
 
 /** Secciones del panel /admin (?vista=…). */
-export type Vista = 'estadisticas' | 'pedidos' | 'productos' | 'carga' | 'usuarios';
+export type Vista = 'estadisticas' | 'pedidos' | 'productos' | 'carga' | 'usuarios' | 'sucursales';
 /** Vistas que puede abrir cada rol (la primera es la de inicio). */
 export function vistasDe(rol: Rol): Vista[] {
-  return rol === 'GERENTE' ? ['pedidos', 'estadisticas', 'productos', 'carga', 'usuarios'] : ['pedidos', 'productos', 'carga'];
+  return rol === 'GERENTE'
+    ? ['pedidos', 'estadisticas', 'productos', 'carga', 'usuarios', 'sucursales']
+    : ['pedidos', 'productos', 'carga'];
 }
 
 export type UsuarioSesion = { id: number; nombre: string; usuario: string; rol: Rol };
 
 export type UsuarioPanel = UsuarioSesion & { activo: boolean; ultimoAcceso: string | null; createdAt: string };
+
+export type SucursalPublica = { id: number; nombre: string; direccion: string; comuna: string };
+export type SucursalAdmin = SucursalPublica & { telefono: string; activo: boolean; orden: number };
 
 /* ---------- Pedidos ---------- */
 
@@ -58,6 +63,7 @@ export type PedidoResumen = {
   nombre: string;
   telefono: string;
   entrega: string;
+  sucursal: string;
   comuna: string;
   pago: string;
   unidades: number;
@@ -67,6 +73,8 @@ export type PedidoResumen = {
 
 export type PedidoDetalle = PedidoResumen & {
   direccion: string;
+  direccionSucursal: string;
+  comunaSucursal: string;
   notas: string;
   items: { varianteId: number | null; codigo: string; nombre: string; cantidad: number; precio: number; img: string | null }[];
   eventos: { id: number; estado: EstadoPedido | null; comentario: string; autor: string; createdAt: string }[];

@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { CONFIG, esDelivery, fmt } from '@/lib/config';
+import type { SucursalPublica } from '@/lib/admin-tipos';
 
 export type Linea = { id: number; nombre: string; opcion: string | null; precio: number; qty: number; img: string };
 
 type Paso = 'comanda' | 'datos' | 'listo';
-type Cliente = { nombre: string; telefono: string; entrega: string; comuna: string; direccion: string; pago: string; notas: string };
+type Cliente = { nombre: string; telefono: string; entrega: string; comuna: string; direccion: string; pago: string; notas: string; sucursalId: string };
 const CLAVE_CLIENTE = 'dc_cliente_v1';
-const VACIO: Cliente = { nombre: '', telefono: '', entrega: CONFIG.entregas[0], comuna: '', direccion: '', pago: CONFIG.pagos[0], notas: '' };
+const VACIO: Omit<Cliente, 'sucursalId'> = { nombre: '', telefono: '', entrega: CONFIG.entregas[0], comuna: '', direccion: '', pago: CONFIG.pagos[0], notas: '' };
 
 /**
  * La comanda: el pedido impreso como ticket de cocina. Paso 1 revisa los productos,
@@ -17,13 +18,14 @@ const VACIO: Cliente = { nombre: '', telefono: '', entrega: CONFIG.entregas[0], 
 export default function Comanda(props: {
   abierta: boolean;
   lineas: Linea[];
+  sucursales: SucursalPublica[];
   onCantidad: (id: number, qty: number) => void;
   onVaciar: () => void;
   onCerrar: () => void;
 }) {
   const { abierta, lineas, onCerrar } = props;
   const [paso, setPaso] = useState<Paso>('comanda');
-  const [c, setC] = useState<Cliente>(VACIO);
+  const [c, setC] = useState<Cliente>(() => ({ ...VACIO, sucursalId: String(props.sucursales[0]?.id ?? '') }));
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState('');
   const [listo, setListo] = useState<{ numero: string; whatsapp: string; total: number } | null>(null);
@@ -33,15 +35,19 @@ export default function Comanda(props: {
   const total = lineas.reduce((s, l) => s + l.precio * l.qty, 0);
   const unidades = lineas.reduce((s, l) => s + l.qty, 0);
   const delivery = esDelivery(c.entrega);
+  const sucursal = props.sucursales.find((s) => s.id === Number(c.sucursalId));
 
   // Datos del cliente guardados en este equipo (para el próximo pedido)
   useEffect(() => {
     try {
       const g = JSON.parse(localStorage.getItem(CLAVE_CLIENTE) ?? 'null');
       // eslint-disable-next-line react-hooks/set-state-in-effect -- se leen una vez al montar (localStorage no existe en el servidor)
-      if (g && typeof g === 'object') setC((x) => ({ ...x, ...g, notas: '' }));
+      if (g && typeof g === 'object') setC((x) => ({
+        ...x, ...g, notas: '',
+        sucursalId: props.sucursales.some((s) => s.id === Number(g.sucursalId)) ? String(g.sucursalId) : String(props.sucursales[0]?.id ?? ''),
+      }));
     } catch { /* datos dañados: se ignoran */ }
-  }, []);
+  }, [props.sucursales]);
 
   useEffect(() => {
     if (!abierta) return;
@@ -63,6 +69,7 @@ export default function Comanda(props: {
     e.preventDefault();
     setError('');
     if (!c.nombre.trim() || !c.telefono.trim()) return setError('Escribe tu nombre y tu teléfono.');
+    if (!sucursal) return setError('Selecciona una sucursal activa.');
     if (delivery && !c.direccion.trim()) return setError('Escribe la dirección de entrega.');
     setEnviando(true);
     const res = await fetch('/api/pedidos', {
@@ -98,7 +105,7 @@ export default function Comanda(props: {
             <img src="/marca/logo.webp" alt="" width={56} height={56} />
             <div>
               <b>{CONFIG.nombre.toUpperCase()}</b>
-              <span>{CONFIG.direccion} · {CONFIG.comuna}</span>
+              <span>{sucursal ? `${sucursal.direccion} · ${sucursal.comuna}` : `${CONFIG.direccion} · ${CONFIG.comuna}`}</span>
               <span>{paso === 'listo' && listo ? `PEDIDO ${listo.numero}` : `COMANDA · ${hora}`}</span>
             </div>
           </div>
@@ -145,6 +152,14 @@ export default function Comanda(props: {
             </>
           ) : (
             <form className="ticket__form" onSubmit={enviar} noValidate>
+              <label className="campo">Sucursal
+                <select value={c.sucursalId} onChange={set('sucursalId')} required disabled={!props.sucursales.length}>
+                  <option value="">Selecciona una sucursal</option>
+                  {props.sucursales.map((s) => <option key={s.id} value={s.id}>{s.nombre} — {s.comuna}</option>)}
+                </select>
+                {sucursal && <small>{sucursal.direccion}, {sucursal.comuna}</small>}
+                {!props.sucursales.length && <small>No hay sucursales activas disponibles para tomar pedidos.</small>}
+              </label>
               <div className="seg" role="radiogroup" aria-label="Entrega">
                 {CONFIG.entregas.map((x) => (
                   <label key={x} className={c.entrega === x ? 'is-on' : ''}>

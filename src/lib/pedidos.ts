@@ -20,6 +20,7 @@ export function mensajePedido(o: {
   lineas: { qty: number; nombre: string; precio: number }[];
   total: number;
   cliente: DatosCliente;
+  sucursal: { nombre: string; direccion: string; comuna: string };
   numero?: string;
   enlace?: string;
 }) {
@@ -37,6 +38,8 @@ export function mensajePedido(o: {
     '*Mis datos*',
     `Nombre: ${d.nombre}`,
     `Teléfono: ${d.telefono}`,
+    `Sucursal: ${o.sucursal.nombre}`,
+    `Local: ${o.sucursal.direccion}, ${o.sucursal.comuna}`,
     `Entrega: ${d.entrega}`,
     delivery && d.direccion ? `Dirección: ${d.direccion}${d.comuna ? `, ${d.comuna}` : ''}` : null,
     `Pago: ${d.pago}`,
@@ -48,7 +51,7 @@ export function mensajePedido(o: {
 /* ---------- Registro desde la carta ---------- */
 
 /**
- * Cuerpo: { items: [{ id (de la opción), qty }], nombre, telefono, entrega, comuna?, direccion?, pago, notas? }.
+ * Cuerpo: { items: [{ id (de la opción), qty }], sucursalId, nombre, telefono, entrega, comuna?, direccion?, pago, notas? }.
  * Los precios salen de la BD; se omiten opciones ocultas o productos agotados.
  */
 export async function registrarPedido(body: Record<string, unknown>) {
@@ -61,6 +64,13 @@ export async function registrarPedido(body: Record<string, unknown>) {
     pago: str(body.pago, 60),
     notas: str(body.notas, 1000),
   };
+  const sucursalId = Number(body.sucursalId);
+  if (!Number.isSafeInteger(sucursalId) || sucursalId <= 0) throw new HttpError(400, 'Selecciona la sucursal donde retirarás o pedirás.');
+  const sucursal = await prisma.sucursal.findFirst({
+    where: { id: sucursalId, activo: true },
+    select: { id: true, nombre: true, telefono: true, direccion: true, comuna: true },
+  });
+  if (!sucursal) throw new HttpError(409, 'La sucursal seleccionada ya no está disponible. Elige otra.');
   if (!cliente.nombre || !cliente.telefono) throw new HttpError(400, 'Escribe tu nombre y tu teléfono.');
   if (!(CONFIG.entregas as readonly string[]).includes(cliente.entrega)) throw new HttpError(400, 'Elige delivery o retiro en el local.');
   if (!(CONFIG.pagos as readonly string[]).includes(cliente.pago)) throw new HttpError(400, 'Elige la forma de pago.');
@@ -88,6 +98,7 @@ export async function registrarPedido(body: Record<string, unknown>) {
   const pedido = await prisma.pedido.create({
     data: {
       nombre: cliente.nombre, telefono: cliente.telefono, entrega: cliente.entrega,
+      sucursalId: sucursal.id,
       comuna: cliente.comuna || null, direccion: cliente.direccion || null,
       pago: cliente.pago, notas: cliente.notas || null, unidades, total,
       items: { create: lineas.map((l) => ({ varianteId: l.v.id, codigo: l.v.codigo, nombre: l.nombre.slice(0, 255), cantidad: l.qty, precio: l.v.precio })) },
@@ -96,14 +107,14 @@ export async function registrarPedido(body: Record<string, unknown>) {
   const numero = numeroPedido(pedido.id);
   const msg = mensajePedido({
     lineas: lineas.map((l) => ({ qty: l.qty, nombre: l.nombre, precio: l.v.precio })),
-    total, cliente, numero,
+    total, cliente, sucursal, numero,
     // Con SITE_URL en .env, el mensaje lleva el enlace a la pantalla del pedido en el panel.
     enlace: process.env.SITE_URL ? `${process.env.SITE_URL.replace(/\/+$/, '')}/admin/pedidos/${pedido.id}` : undefined,
   });
   return {
     id: pedido.id, numero, unidades, total,
     omitidos: [...qtys.keys()].filter((id) => !rows.some((r) => r.id === id)),
-    whatsapp: linkWa(msg),
+    whatsapp: linkWa(msg, sucursal.telefono),
   };
 }
 
@@ -121,11 +132,13 @@ export function leerFecha(s: string | null | undefined, finDelDia = false): Date
 
 const resumenSelect = {
   id: true, estado: true, nombre: true, telefono: true, entrega: true, comuna: true, pago: true, unidades: true, total: true, createdAt: true,
+  sucursal: { select: { nombre: true } },
 } as const;
 type ResumenRow = Prisma.PedidoGetPayload<{ select: typeof resumenSelect }>;
 
 const toResumen = (p: ResumenRow): PedidoResumen => ({
   id: p.id, numero: numeroPedido(p.id), estado: p.estado, nombre: p.nombre, telefono: p.telefono, entrega: p.entrega,
+  sucursal: p.sucursal?.nombre ?? 'Sin sucursal',
   comuna: p.comuna ?? '', pago: p.pago, unidades: p.unidades, total: p.total, createdAt: p.createdAt.toISOString(),
 });
 
@@ -162,6 +175,7 @@ export async function obtenerPedido(id: number): Promise<PedidoDetalle | null> {
     where: { id },
     select: {
       ...resumenSelect, direccion: true, notas: true,
+      sucursal: { select: { nombre: true, direccion: true, comuna: true } },
       items: {
         select: { varianteId: true, codigo: true, nombre: true, cantidad: true, precio: true, variante: { select: { producto: { select: { img: true } } } } },
         orderBy: { id: 'asc' },
@@ -173,6 +187,8 @@ export async function obtenerPedido(id: number): Promise<PedidoDetalle | null> {
   return {
     ...toResumen(p),
     direccion: p.direccion ?? '',
+    direccionSucursal: p.sucursal?.direccion ?? '',
+    comunaSucursal: p.sucursal?.comuna ?? '',
     notas: p.notas ?? '',
     items: p.items.map((i) => ({
       varianteId: i.varianteId, codigo: i.codigo, nombre: i.nombre, cantidad: i.cantidad, precio: i.precio,

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CONFIG, DIRECCION_COMPLETA, MAPA_EMBED, MAPA_LINK, WA_DEFAULT, fmt, linkWa, type ProductoCarta } from '@/lib/config';
 import { norm } from '@/lib/texto';
+import type { SucursalPublica } from '@/lib/admin-tipos';
 import Tarjeta from './Tarjeta';
 import Comanda, { type Linea } from './Comanda';
 
@@ -23,7 +24,7 @@ const IconoBolsa = () => (
 );
 
 /** La carta online de Di Censo Pollo. */
-export default function Tienda({ productos }: { productos: ProductoCarta[] }) {
+export default function Tienda({ productos, sucursales }: { productos: ProductoCarta[]; sucursales: SucursalPublica[] }) {
   const [comanda, setComanda] = useState<Map<number, number>>(new Map());
   const [abierta, setAbierta] = useState(false);
   const [q, setQ] = useState('');
@@ -287,7 +288,7 @@ export default function Tienda({ productos }: { productos: ProductoCarta[] }) {
         </button>
       )}
 
-      <Comanda abierta={abierta} lineas={lineas} onCantidad={cantidad} onVaciar={vaciar} onCerrar={cerrar} />
+      <Comanda abierta={abierta} lineas={lineas} sucursales={sucursales} onCantidad={cantidad} onVaciar={vaciar} onCerrar={cerrar} />
       <div className={`toast${toast.on ? ' on' : ''}`} role="status" aria-live="polite">{toast.txt}</div>
     </>
   );

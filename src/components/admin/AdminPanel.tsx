@@ -8,6 +8,7 @@ import VistaPedidos from './VistaPedidos';
 import VistaEstadisticas from './VistaEstadisticas';
 import VistaUsuarios from './VistaUsuarios';
 import VistaCarga from './VistaCarga';
+import VistaSucursales from './VistaSucursales';
 
 const MENU: { titulo: string; items: { id: Vista; label: string; icono: ReactNode; roles: Rol[] }[] }[] = [
   {
@@ -15,6 +16,7 @@ const MENU: { titulo: string; items: { id: Vista; label: string; icono: ReactNod
     items: [
       { id: 'estadisticas', label: 'Ventas y estadísticas', icono: ICONOS.estadisticas, roles: ['GERENTE'] },
       { id: 'usuarios', label: 'Usuarios', icono: ICONOS.usuarios, roles: ['GERENTE'] },
+      { id: 'sucursales', label: 'Sucursales', icono: ICONOS.sucursales, roles: ['GERENTE'] },
     ],
   },
   {
@@ -30,6 +32,7 @@ const MENU: { titulo: string; items: { id: Vista; label: string; icono: ReactNod
 const TITULOS: Record<Vista, { eyebrow: string; titulo: string }> = {
   estadisticas: { eyebrow: 'Gerencia', titulo: 'Ventas y estadísticas' },
   usuarios: { eyebrow: 'Gerencia', titulo: 'Usuarios del panel' },
+  sucursales: { eyebrow: 'Gerencia', titulo: 'Sucursales' },
   pedidos: { eyebrow: 'Operación', titulo: 'Pedidos' },
   productos: { eyebrow: 'Operación', titulo: 'Carta y precios' },
   carga: { eyebrow: 'Operación', titulo: 'Carga masiva y fotos en lote' },
@@ -143,6 +146,7 @@ export default function AdminPanel(props: {
             <VistaCarga productos={productos} maxKB={props.maxKB} toast={toast} onSesionVencida={sesionVencida} onAplicado={recargarCarta} />
           )}
           {vista === 'usuarios' && usuario.rol === 'GERENTE' && <VistaUsuarios yo={usuario} toast={toast} onSesionVencida={sesionVencida} />}
+          {vista === 'sucursales' && usuario.rol === 'GERENTE' && <VistaSucursales toast={toast} onSesionVencida={sesionVencida} />}
         </main>
       </div>
       {toastNodo}

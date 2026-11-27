@@ -23,7 +23,7 @@ export const MAPA_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(`$
 export const MAPA_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${CONFIG.nombre}, ${CONFIG.direccion}, ${CONFIG.comuna}`)}`;
 
 export const WA_DEFAULT = '¡Hola Di Censo Pollo! Quiero hacer un pedido 🍗';
-export const linkWa = (txt: string) => 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(txt);
+export const linkWa = (txt: string, telefono: string = CONFIG.whatsapp) => 'https://wa.me/' + telefono + '?text=' + encodeURIComponent(txt);
 
 /** Pesos chilenos: 14000 → "$14.000" */
 export const fmt = (n: number) => '$' + Math.round(n).toLocaleString('es-CL');
